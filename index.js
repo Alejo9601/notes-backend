@@ -68,7 +68,7 @@ app.post("/api/notes", (_req, res) => {
   //notes.push(noteAux)
   //notes = notes.concat(noteAux) different ways to do the same thing
 
-  res.status(204).end();
+  res.status(201).end();
 });
 
 const PORT = 3000;
