@@ -1,7 +1,9 @@
 const { response } = require("express");
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
+app.use(cors());
 app.use(express.json());
 
 let notes = [
@@ -68,10 +70,10 @@ app.post("/api/notes", (_req, res) => {
   //notes.push(noteAux)
   //notes = notes.concat(noteAux) different ways to do the same thing
 
-  res.status(201).end();
+  res.status(201).send(noteAux);
 });
 
-const PORT = 3000;
+const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server running on PORT ${PORT}`);
 });
