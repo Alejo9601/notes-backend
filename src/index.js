@@ -1,31 +1,17 @@
+require("dotenv").config({ path: "src/.env" });
 const { response } = require("express");
 const express = require("express");
 const app = express();
 const cors = require("cors");
 
+require("./mongo");
+
+const Note = require("./models/Note");
+
 app.use(cors());
 app.use(express.json());
 
-let notes = [
-  {
-    id: 1,
-    content: "This is the first note",
-    date: "30/06/2022",
-    important: true,
-  },
-  {
-    id: 2,
-    content: "this is the second note",
-    date: "30/06/2022",
-    important: true,
-  },
-  {
-    id: 3,
-    content: "this is third the note",
-    date: "30/06/2022",
-    important: true,
-  },
-];
+let notes = [];
 
 // const app = http.createServer((request, response) => {
 //   response.writeHead(200, { "Content-Type": "application/json" });
@@ -37,7 +23,7 @@ app.get("/", (_req, res) => {
 });
 
 app.get("/api/notes", (_req, res) => {
-  res.json(notes);
+  Note.find({}).then((notes) => res.json(notes));
 });
 
 app.get("/api/notes/:id", (_req, res) => {
