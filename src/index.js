@@ -10,13 +10,6 @@ const Note = require("./models/Note");
 app.use(cors());
 app.use(express.json());
 
-let notes = [];
-
-// const app = http.createServer((request, response) => {
-//   response.writeHead(200, { "Content-Type": "application/json" });
-//   response.end(JSON.stringify(notes));
-// });
-
 app.get("/", (_req, res) => {
   res.send("<h1>HELLO WORLD</h1>");
 });
