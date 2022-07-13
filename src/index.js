@@ -40,7 +40,7 @@ app.post("/api/notes", (_req, res) => {
   noteAux.save().then((noteSaved) => res.status(201).send(noteSaved));
 });
 
-const PORT = 3001;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on PORT ${PORT}`);
 });
