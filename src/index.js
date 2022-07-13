@@ -1,5 +1,4 @@
 require("dotenv").config({ path: "src/.env" });
-const { response } = require("express");
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -23,14 +22,12 @@ app.get("/", (_req, res) => {
 });
 
 app.get("/api/notes", (_req, res) => {
-  Note.find({}).then((notes) => res.json(notes));
+  Note.find({}).then((result) => res.json(result));
 });
 
 app.get("/api/notes/:id", (_req, res) => {
-  const id = Number(_req.params.id);
-  const note = notes.find((note) => note.id === id);
-  console.log(id);
-  res.json(note);
+  const id = _req.params.id;
+  Note.findById(id).then((note) => res.json(note));
 });
 
 app.delete("/api/notes/:id", (_req, res) => {
