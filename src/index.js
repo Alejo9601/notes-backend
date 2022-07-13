@@ -38,21 +38,13 @@ app.delete("/api/notes/:id", (_req, res) => {
 app.post("/api/notes", (_req, res) => {
   const note = _req.body;
 
-  const ids = notes.map((note) => note.id);
-  const maxId = Math.max(...ids);
-
-  const noteAux = {
-    id: maxId + 1,
+  const noteAux = new Note({
     content: note.content,
     date: new Date().toISOString(),
     important: typeof note.important !== "undefined" ? note.important : false,
-  };
+  });
 
-  notes = [...notes, noteAux];
-  //notes.push(noteAux)
-  //notes = notes.concat(noteAux) different ways to do the same thing
-
-  res.status(201).send(noteAux);
+  noteAux.save().then((noteSaved) => res.status(201).send(noteSaved));
 });
 
 const PORT = 3001;
