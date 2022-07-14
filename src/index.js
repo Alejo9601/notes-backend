@@ -1,11 +1,12 @@
 require("dotenv").config({ path: "src/.env" });
-const express = require("express");
-const app = express();
-const cors = require("cors");
-
 require("./mongo");
 
+const express = require("express");
+const cors = require("cors");
 const Note = require("./models/Note");
+const errorHandler = require("./middlewares/errorHandler");
+const notFound = require("./middlewares/notFound");
+const app = express();
 
 app.use(cors());
 app.use(express.json());
@@ -54,14 +55,8 @@ app.post("/api/notes", (_req, res) => {
   noteAux.save().then((noteSaved) => res.status(201).send(noteSaved));
 });
 
-app.use((error, _req, res, next) => {
-  console.error(error);
-  if (error.name === "CastError") {
-    res.status(400).send({ error: "id used is malformed" });
-  } else {
-    res.status(500).end();
-  }
-});
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
